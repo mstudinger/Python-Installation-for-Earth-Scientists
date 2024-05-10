@@ -34,10 +34,53 @@ print(f'Python version:      {sys.version_info.major:d}.{sys.version_info.minor:
 print(f'Python installation: {python_version_detail[0]:s} {python_version_detail[1]:s}')
 print(f'                     {python_version_detail[2]:s}')
 
-#%% 3) install geopandas and gdal
-# conda install geopandas
+#%% 3) install geopandas and gdal as well as geodatasets
+"""
+    Installation: conda install geopandas
+    Installation: conda install geodatasets -c conda-forge # used for testing
+"""
+
+import warnings
+warnings.filterwarnings("ignore", module="gdal")        # suppresses all warnings from gdal module
+warnings.filterwarnings("ignore", module="geodatasets") # suppresses all warnings from geodatasets module
+warnings.filterwarnings("ignore", category=DeprecationWarning)
+
+import geodatasets
+import geopandas
+import geopandas as gdp
+from   osgeo import gdal
+from   geodatasets import get_path
 
 
+str_title = ' GeoPandas & GDAL/Python™ '
+str_title = str_title.center(width_output, "-")
+print("\n" + str_title + "\n")
+print(f'GeoPandas    version: {gdp.__version__:s}')
+print(f'GDAL/Python™ version: {gdal.__version__:s}')
+print(f'geodatasets  version: {geodatasets.__version__:s}')
+
+# verify GeoPandas
+path_to_data = get_path("nybb")
+gdf = geopandas.read_file(path_to_data)
+
+# verify modules
+f_name_geotiff = r"." + os.sep + "test_data" + os.sep + "GEOTIFF" + os.sep + "IOCAM1B_2019_GR_NASA_20190506-131614.4217.tif"
+
+cambot = gdal.Open(f_name_geotiff)
+cambot_proj = cambot.GetProjection()
+
+if "Polar_Stereographic" in cambot_proj:
+    print('GDAL/Python™ verification: GeoTiff projection information contains "Polar_Stereographic"')
+else:
+    print('GDAL/Python™ verification: ERROR: GeoTiff projection information could not be read')
+
+# verify GeoPandas
+if hasattr(gdf, 'area'):
+  print('GeoPandas    verification: GeoPandas DataFrame has no attribute "area"')
+  print(gdf)
+else:
+  print('GeoPandas    verification: ERROR: GeoPandas DataFrame has no attribute "area"')
+  
 #%% 4) OpenCV
 
 """
