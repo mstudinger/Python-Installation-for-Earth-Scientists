@@ -8,6 +8,12 @@ This Jupyter notebook and corresponding Python™ script have been tested under
 1) Windows 11 Pro (23H2)        Python™ 3.11.7
 2) Windows 10 Enterprise (21H2) Python™ 3.9.13
 3) Linux Ubuntu 22.04.2 on WSL2 Python™ 3.11.7
+
+Note: to clone repository in WSL2 environment use:
+    git clone git clone https://github.com/mstudinger/Python-Test-Tools/
+    Username: <my-username>
+    Password: <my-personal-access-token>
+
 """
 #%% First, determine if code is executed from a classic Jupyter Notebook, JupyterLab, or Python™
 import psutil
@@ -32,7 +38,6 @@ else:
 import os
 import socket
 import platform
-
 
 str_title = ' Platform and Operating System '
 str_title = str_title.center(width_output, "-")
