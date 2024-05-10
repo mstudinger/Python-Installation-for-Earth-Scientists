@@ -3,89 +3,118 @@
 Created on Thu May  9 22:50:37 2024
 
 @author: Michael Studinger
+
+This Jupyter notebook and corresponding Python™ script have been tested under 
+1) Windows 11 Pro (23H2)        Python™ 3.11.7
+2) Windows 10 Enterprise (21H2) Python™ 3.9.13
+3) Linux Ubuntu 22.04.2 on WSL2 Python™ 3.11.7
 """
+#%% First, determine if code is executed from a classic Jupyter Notebook, JupyterLab, or Python™
+import psutil
+width_output = 78 # number of characters for output 
+parent_process = psutil.Process().parent().cmdline()[-1]
+
+str_title = ' Determine Computing Environment '
+str_title = str_title.center(width_output, "-")
+print("\n" + str_title + "\n")
+
+if 'jupyter-lab' in parent_process:
+    print('Environment: Jupyterlab')
+    ENVIRONMENT = "Jupyterlab"
+elif 'jupyter-notebook' in parent_process:
+    print('Environment: Jupyter Notebook')
+    ENVIRONMENT = "Jupyternotebook"
+else:
+    print('Environment: Python™')
+    ENVIRONMENT = "Python"
 
 #%% 1) get computer name and OS
 import os
 import socket
 import platform
 
-width_output = 78 # number of characters for output 
 
 str_title = ' Platform and Operating System '
 str_title = str_title.center(width_output, "-")
 print("\n" + str_title + "\n")
 
-print(f'Computer:            {socket.gethostname():s}')
-print(f'Operating system:    {platform.system():s} {os.name.upper():s} Release: {platform.release():s}')
+print(f'Computer:             {socket.gethostname():s}')
+print(f'Operating system:     {platform.system():s} {os.name.upper():s} Release: {platform.release():s}')
 
 #%% 2) get Python version
 
 import sys
+import jupyterlab
 
 python_version        = sys.version
 python_version_detail = python_version.split(" | ",-1) # -1 gets all occurences. can set max number of splits
 
-str_title = ' Python Version and Installation '
+str_title = ' Python™ Version and Installation '
 str_title = str_title.center(width_output, "-")
 print("\n" + str_title + "\n")
 
-print(f'Python version:      {sys.version_info.major:d}.{sys.version_info.minor:d}.{sys.version_info.micro:d}')
-print(f'Python installation: {python_version_detail[0]:s} {python_version_detail[1]:s}')
-print(f'                     {python_version_detail[2]:s}')
+print(f'Python™ version:      {sys.version_info.major:d}.{sys.version_info.minor:d}.{sys.version_info.micro:d}')
+print(f'Python™ installation: {python_version_detail[0]:s} {python_version_detail[1]:s}')
+print(f'                      {python_version_detail[2]:s}')
+print(f'JupyterLab version:   {jupyterlab.__version__:s}')
+
 
 #%% 3) install geopandas and gdal as well as geodatasets
 """
     Installation: conda install geopandas
     Installation: conda install geodatasets -c conda-forge # used for testing
 """
-
 import warnings
-warnings.filterwarnings("ignore", module="gdal")        # suppresses all warnings from gdal module
-warnings.filterwarnings("ignore", module="geodatasets") # suppresses all warnings from geodatasets module
-warnings.filterwarnings("ignore", category=DeprecationWarning)
-
 import geodatasets
 import geopandas
 import geopandas as gdp
 from   osgeo import gdal
 from   geodatasets import get_path
+warnings.filterwarnings("ignore", module="gdal")        # suppresses all warnings from gdal module
+warnings.filterwarnings("ignore", module="geodatasets") # suppresses all warnings from geodatasets module
+warnings.filterwarnings("ignore", category=DeprecationWarning)
 
-
-str_title = ' GeoPandas & GDAL/Python™ '
-str_title = str_title.center(width_output, "-")
-print("\n" + str_title + "\n")
-print(f'GeoPandas    version: {gdp.__version__:s}')
-print(f'GDAL/Python™ version: {gdal.__version__:s}')
-print(f'geodatasets  version: {geodatasets.__version__:s}')
-
-# verify GeoPandas
-path_to_data = get_path("nybb")
-gdf = geopandas.read_file(path_to_data)
-
-# verify modules
-f_name_geotiff = r"." + os.sep + "test_data" + os.sep + "GEOTIFF" + os.sep + "IOCAM1B_2019_GR_NASA_20190506-131614.4217.tif"
-
-cambot = gdal.Open(f_name_geotiff)
-cambot_proj = cambot.GetProjection()
-
-if "Polar_Stereographic" in cambot_proj:
-    print('GDAL/Python™ verification: GeoTiff projection information contains "Polar_Stereographic"')
+if ENVIRONMENT == "Jupyterlab" or ENVIRONMENT == "Jupyternotbook":
+    print("WARNING: GeoPandas & GDAL/Python™ have been verified to work with Xarray in Python™.")
+    print("For reasons that are unclear they produce an errror when executed from JupyterLab or Jupyter Notebook.")
+    print(f'SKipping GeoPandas & GDAL/Python™ since code is executed from {ENVIRONMENT:s}')
+elif ENVIRONMENT == "Python":
+    str_title = ' GeoPandas & GDAL/Python™ '
+    str_title = str_title.center(width_output, "-")
+    print("\n" + str_title + "\n")
+    print(f'GeoPandas    version: {gdp.__version__:s}')
+    print(f'GDAL/Python™ version: {gdal.__version__:s}')
+    print(f'geodatasets  version: {geodatasets.__version__:s}')
+    
+    # verify GeoPandas
+    path_to_data = get_path("nybb")
+    gdf = geopandas.read_file(path_to_data)
+    
+    # verify modules
+    f_name_geotiff = r"." + os.sep + "test_data" + os.sep + "GEOTIFF" + os.sep + "IOCAM1B_2019_GR_NASA_20190506-131614.4217.tif"
+    
+    cambot = gdal.Open(f_name_geotiff)
+    cambot_proj = cambot.GetProjection()
+    
+    if "Polar_Stereographic" in cambot_proj:
+        print('GDAL/Python™ verification: GeoTiff projection information contains "Polar_Stereographic"')
+    else:
+        print('GDAL/Python™ verification: ERROR: GeoTiff projection information could not be read')
+    
+    # verify GeoPandas
+    if hasattr(gdf, 'area'):
+      print('GeoPandas    verification: GeoPandas DataFrame has attribute "area"')
+      print(gdf)
+    else:
+      print('GeoPandas    verification: ERROR: GeoPandas DataFrame has no attribute "area"')
 else:
-    print('GDAL/Python™ verification: ERROR: GeoTiff projection information could not be read')
+    os.sys.exit("Computing environment is not supported. Abort.")
 
-# verify GeoPandas
-if hasattr(gdf, 'area'):
-  print('GeoPandas    verification: GeoPandas DataFrame has attribute "area"')
-  print(gdf)
-else:
-  print('GeoPandas    verification: ERROR: GeoPandas DataFrame has no attribute "area"')
-  
 #%% 4) OpenCV
 
 """
     see: https://opencv.org/get-started/
-    pip3 install opencv-python\
+    pip3 install opencv-python
     -> Successfully installed opencv-python-4.9.0.80
     TODO: unclear if .dll needs to be copied as described in link above 
 """
@@ -200,7 +229,7 @@ str_title = ' PyCRS GIS '
 str_title = str_title.center(width_output, "-")
 print("\n" + str_title + "\n")
 
-print(f'PyCRS       version: {pycrs.__version__:s}')
+print(f'PyCRS version: {pycrs.__version__:s}')
 
 #%% 9) PyMap3D 
 
@@ -215,7 +244,7 @@ import pymap3d
 str_title = ' PyMap3D '
 str_title = str_title.center(width_output, "-")
 print("\n" + str_title + "\n")
-print(f'PyMap3D     version: {pymap3d.__version__:s}') 
+print(f'PyMap3D version: {pymap3d.__version__:s}') 
 
 #%% 10) cmcrameri
 """
@@ -227,6 +256,32 @@ import cmcrameri
 str_title = ' Python™ implementation of the Scientific Colour Maps '
 str_title = str_title.center(width_output, "-")
 print("\n" + str_title + "\n")
-print(f'cmcrameri   version: {cmcrameri.__version__:s}') 
+print(f'cmcrameri version: {cmcrameri.__version__:s}') 
 
+#%% laspy and lazrs-python
+"""
+    laspy is a Python™ module that reads and writes LAS and LAZ files, which are common formats for lidar pointcloud and full waveform data.
+    Installation: conda install -c conda-forge laspy
+    See also: https://github.com/LAStools/LAStools
+"""
+import laspy
 
+str_title = ' laspy & lazrs-python '
+str_title = str_title.center(width_output, "-")
+print("\n" + str_title + "\n")
+print(f'laspy version: {laspy.__version__:s}') 
+
+#%% Xarray  + Note Xarray installation make gdal unusable
+# Xarray
+"""
+    Xarray is a Python™ library that provides a common interface for working with n-dimensional arrays and datasets.
+    Installation: conda install -c conda-forge xarray dask netCDF4 bottleneck
+    Remove:  conda remove xarray          # also removes depedencies. note: solving environment takes a long time
+    Remove:  conda remove xarray --force  # removes only the specified package without removing dependencies
+"""
+import xarray
+
+str_title = ' Xarray '
+str_title = str_title.center(width_output, "-")
+print("\n" + str_title + "\n")
+print(f'Xarray version: {xarray.__version__:s}')
