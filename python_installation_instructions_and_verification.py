@@ -26,10 +26,18 @@ print("\n" + str_title + "\n")
 
 if 'jupyter-lab' in parent_process:
     print('Environment: Jupyterlab')
-    ENVIRONMENT = "Jupyterlab"
+    ENVIRONMENT = "JupyterLab"
 elif 'jupyter-notebook' in parent_process:
     print('Environment: Jupyter Notebook')
-    ENVIRONMENT = "Jupyternotebook"
+    ENVIRONMENT = "Jupyter Notebook"
+elif "spyder-script.py" in parent_process:
+    ENVIRONMENT = "Python"
+elif parent_process == "-bash":
+    print('Environment: Python™ on Linux (command line)')
+    ENVIRONMENT = "Python"
+elif "anaconda3" in parent_process:
+    print('Environment: Python™ on Windows (command line)')
+    ENVIRONMENT = "Python"
 else:
     print('Environment: Python™')
     ENVIRONMENT = "Python"
@@ -123,11 +131,15 @@ else:
     -> Successfully installed opencv-python-4.9.0.80
     TODO: unclear if .dll needs to be copied as described in link above 
 """
-
 import cv2 as cv2
+import pathlib
 
-f_name_jpg = r"." + os.sep + "test_data" + os.sep + "JPEG" + os.sep + "IOCAM0_2019_GR_NASA_20190506-131614.4217.jpg"
-image_bgr  = cv2.imread(f_name_jpg)
+if platform.system() == "Windows":
+    f_name_jpg = pathlib.Path(r"./test_data/JPEG/IOCAM0_2019_GR_NASA_20190506-131614.4217.jpg")
+elif platform.system() == 'Linux':
+    f_name_jpg = pathlib.Path(r"./test_data/JPEG/IOCAM0_2019_GR_NASA_20190506-131614.4217.jpg")
+
+image_bgr  = cv2.imread(str(f_name_jpg))
 # image      = cv2.cvtColor(image_bgr, cv2.COLOR_BGR2RGB)
 img_size   = image_bgr.shape
  
