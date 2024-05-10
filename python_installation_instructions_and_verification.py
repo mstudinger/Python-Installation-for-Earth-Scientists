@@ -67,8 +67,9 @@ str_title = str_title.center(width_output, "-")
 print("\n" + str_title + "\n")
 
 print(f'Python™ version:      {sys.version_info.major:d}.{sys.version_info.minor:d}.{sys.version_info.micro:d}')
-print(f'Python™ installation: {python_version_detail[0]:s} {python_version_detail[1]:s}')
-print(f'                      {python_version_detail[2]:s}')
+if len(python_version_detail) == 3:
+    print(f'Python™ installation: {python_version_detail[0]:s} {python_version_detail[1]:s}')
+    print(f'                      {python_version_detail[2]:s}')
 print(f'JupyterLab version:   {jupyterlab.__version__:s}')
 
 
@@ -87,7 +88,7 @@ warnings.filterwarnings("ignore", module="gdal")        # suppresses all warning
 warnings.filterwarnings("ignore", module="geodatasets") # suppresses all warnings from geodatasets module
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
-if ENVIRONMENT == "Jupyterlab" or ENVIRONMENT == "Jupyternotbook":
+if (ENVIRONMENT == "Jupyterlab" or ENVIRONMENT == "Jupyternotbook") and (sys.version_info.minor > 9):
     print("WARNING: GeoPandas & GDAL/Python™ have been verified to work with Xarray in Python™.")
     print("For reasons that are unclear they produce an errror when executed from JupyterLab or Jupyter Notebook.")
     print(f'SKipping GeoPandas & GDAL/Python™ since code is executed from {ENVIRONMENT:s}')
@@ -214,7 +215,7 @@ else:
 import pyproj
 import shapely
 import numpy as np
-from shapely import Point
+from   shapely import Point
 
 # verify PYPRØJ
 # EPSG:3413 NSIDC Sea Ice Polar Stereographic North/WGS-84 used for Greenland
