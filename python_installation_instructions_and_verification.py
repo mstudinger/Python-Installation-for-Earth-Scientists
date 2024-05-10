@@ -106,7 +106,7 @@ print(f'Processing  support: {processing_unit.upper():s}')
 """
 
 import segment_anything
-    
+  
 str_title = ' Segment Anything Model (SAM) '
 str_title = str_title.center(width_output, "-")
 print("\n" + str_title + "\n")
@@ -118,11 +118,75 @@ else:
     print(f'Segment Anything:    {modulename:s} module is imported and in the sys.modules dictionary')
 
 #%% 7) pip install pyproj
+"""
+    PYPRØJ and shapely are installed as part of geopandas. If geopandas is not installed use:
+    pip install pyproj
+    Shapely is a Python™ package that uses the GEOS library to perform set-theoretic operations
+    on planar features. 
+"""
+
+import pyproj
+import shapely
+import numpy as np
+from shapely import Point
+
+# verify PYPRØJ
+# EPSG:3413 NSIDC Sea Ice Polar Stereographic North/WGS-84 used for Greenland
+# EPSG:4326 WGS84 - World Geodetic System 1984, used in GPS 
+geo2xy = pyproj.Transformer.from_crs(4326,3413)
+xy2geo = pyproj.Transformer.from_crs(3413,4326)
+xy     = geo2xy.transform(70.0, -45.0)
+lonlat = xy2geo.transform(xy[0],xy[1])
+
+# verify Shapely
+patch = Point(0.0, 0.0).buffer(1.0)
+path_area = patch.area # result should be Pi
+
+str_title = ' PYPRØJ & Shapely '
+str_title = str_title.center(width_output, "-")
+print("\n" + str_title + "\n")
+
+print(f'PYPRØJ       version: {pyproj.proj_version_str:s}')
+print(f'Shapely      version: {shapely.__version__:s}')
+if lonlat[1] == -45:
+    print('PYPRØJ  verification: projected geographic coordinates to polar stereographic and back')
+if (np.isfinite(path_area)) & (path_area > 0):
+    print('Shapely verification: calculated buffer area around point geometry')
 
 #%% 8) conda install -c conda-forge pycrs
 
-#%% 9) conda install -c conda-forge pymap3d
+import pycrs 
+str_title = ' PyCRS GIS '
+str_title = str_title.center(width_output, "-")
+print("\n" + str_title + "\n")
 
-#%% 10) conda install -c conda-forge cmcrameri
+print(f'PyCRS       version: {pycrs.__version__:s}')
+
+#%% 9) PyMap3D 
+
+"""
+    PyMap3D is a Python™ (optional Numpy) toolbox for 3D geographic coordinate transformations and geodesy.
+    It supports various coordinate systems, ellipsoids, and Vincenty functions, and has a similar syntax 
+    to the MATLAB®  Mapping Toolbox.
+    Installation: conda install -c conda-forge pymap3d
+"""
+import pymap3d
+
+str_title = ' PyMap3D '
+str_title = str_title.center(width_output, "-")
+print("\n" + str_title + "\n")
+print(f'PyMap3D     version: {pymap3d.__version__:s}') 
+
+#%% 10) cmcrameri
+"""
+    Python™ implementation of the Scientific Colour Maps version 8.0 (2023-06-14).
+    Installation: conda install -c conda-forge cmcrameri
+"""
+import cmcrameri
+
+str_title = ' Python™ implementation of the Scientific Colour Maps '
+str_title = str_title.center(width_output, "-")
+print("\n" + str_title + "\n")
+print(f'cmcrameri   version: {cmcrameri.__version__:s}') 
 
 
