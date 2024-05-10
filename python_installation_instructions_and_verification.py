@@ -76,7 +76,7 @@ else:
 
 # verify GeoPandas
 if hasattr(gdf, 'area'):
-  print('GeoPandas    verification: GeoPandas DataFrame has no attribute "area"')
+  print('GeoPandas    verification: GeoPandas DataFrame has attribute "area"')
   print(gdf)
 else:
   print('GeoPandas    verification: ERROR: GeoPandas DataFrame has no attribute "area"')
