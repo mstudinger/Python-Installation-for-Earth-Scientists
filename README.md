@@ -5,4 +5,4 @@ Managing Python™ packages can be a daunting task. Often, numerous incompatibil
 * Windows 11 Pro (23H2)        Python™ 3.11.7
 * Windows 10 Enterprise (21H2) Python™ 3.9.13
 * Linux POSIX Release: 5.15.146.1-microsoft-standard-WSL2 Python™ 3.11.7
-* Linux POSIX Release: 5.10.198-187.748.amzn2.x86_64 Python™ 3.11.8 (selected elements tested on the [CryoCloud JupyterHub](https://cryointhecloud.com))
+* Linux POSIX Release: 5.10.198-187.748.amzn2.x86_64 Python™ 3.11.8 (selected packages tested on the [CryoCloud JupyterHub](https://cryointhecloud.com))
