@@ -9,6 +9,7 @@ __pycache__/
 # my folder and files to exclude
 archive/
 develop/
+develop_*
 
 # Distribution / packaging
 .Python
