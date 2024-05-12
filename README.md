@@ -1,7 +1,7 @@
 # <div align="center">Python™ for Earth Scientists</div> 
 ### <div align="center">Package Installation and Verification</div>
 
-Managing Python™ packages can be a daunting task. Often, numerous incompatibilities exist between Python™ packages commonly used in Earth sciences (see example about GDAL and Xarray in Jupyter notebook). Commonly required tasks vary depending on the user's need. Here are some capabilities I need for my workflow that are not covered by the standard [Anaconda](https://www.anaconda.com/) package list:  
+Managing Python™ packages can be a daunting task. Often, numerous incompatibilities exist between Python™ packages commonly used in Earth sciences (see example about GDAL and Xarray in Jupyter notebook). Commonly required tasks vary depending on the user's need. Here are some capabilities I need for my workflow that are not covered by the standard [Anaconda](https://www.anaconda.com/) package installation:  
 * geodetic 2-D and 3-D coordinate transformations
 * geodetic computations
 * handling commonly used data formats such as GeoData frames
