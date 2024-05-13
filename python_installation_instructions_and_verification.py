@@ -103,6 +103,8 @@ warnings.filterwarnings("ignore", module="geodatasets") # suppresses all warning
 warnings.filterwarnings("ignore", module="paramiko")    # suppresses all warnings from paramiko module (which would probably be sufficient)
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
+PRINT_GDF = False # will be set to True if a GeoDataFrame is loaded
+
 if (ENVIRONMENT == "Jupyterlab" or ENVIRONMENT == "Jupyternotbook") and (sys.version_info.minor > 9):
     print(" ")
     print(f"WARNING: {env_str:s} and Python™ version {sys.version_info.major:d}.{sys.version_info.minor:d}:")
@@ -139,14 +141,15 @@ elif sys.version_info.minor >= 9:
     
     # verify GeoPandas
     if hasattr(gdf, 'area'):
-      print('GeoPandas    verification: GeoPandas DataFrame has attribute "area"')
+      print('GeoPandas    verification: GeoPandas GeoDataFrame has attribute "area":')
       PRINT_GDF = True
     else:
-      print('GeoPandas    verification: ERROR: GeoPandas DataFrame has no attribute "area"')
+      print('GeoPandas    verification: ERROR: GeoPandas GeoDataFrame has no attribute "area"')
 else:
     os.sys.exit("The Python™ computing environment or version are not supported. Abort.")
 print(" ")
-gdf
+if PRINT_GDF:
+    display(gdf)
 
 
 # ### 4.2. OpenCV
