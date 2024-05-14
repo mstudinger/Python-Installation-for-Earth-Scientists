@@ -4,7 +4,17 @@
 # <font size="7"> <div align="center">Python™ for Earth Scientists</div></font>
 # <font size="6"> <div align="center">Package Installation and Verification</div></font>
 
-# This Jupyter notebook contains instructions for installing essential Python™ packages for Earth scientists and test the functionality of the installed packages. This Jupyter notebook and the corresponding Python™ script have been tested under the following environments:  
+# **Note: After publishing this repository several excellent suggestions were made in the [discussions](https://github.com/mstudinger/Python-Installation-for-Earth-Scientists/discussions) on how to avoid the issues I've experienced with package management. [Make sure to check them out.](https://github.com/mstudinger/Python-Installation-for-Earth-Scientists/discussions)**
+# 
+# Managing Python™ packages can be a daunting task. Often, numerous incompatibilities exist between Python™ packages commonly used in Earth sciences (see example about GDAL and Xarray in Jupyter notebook). Commonly required tasks vary depending on the user's need. Here are some capabilities I need for my workflow that are not covered by the standard [Anaconda](https://www.anaconda.com/) package installation:  
+# * geodetic 2-D and 3-D coordinate transformations
+# * geodetic computations
+# * handling commonly used data formats such as GeoData frames
+# * image processing using sophisticated tools available in dedicated packages such as OpenCV ([Open Source Computer Vision Library](https://opencv.org/))
+# * work specific tools, such as AI-based tools e.g., [Segment Anything Model (SAM)](https://github.com/facebookresearch/segment-anything)
+# * collaborative code developing and open sharing of code in commonly used repositories such as [GitHub](https://github.com/)
+# 
+# This Jupyter notebook contains instructions for installing essential Python™ packages for Earth scientists and test the functionality of the installed packages. You can run individual cells in this notebook for checking the packages you would like to verify. This Jupyter notebook and the corresponding Python™ script have been tested under the following environments:  
 # * Windows 11 Pro (23H2)        Python™ 3.11.7
 # * Windows 10 Enterprise (21H2) Python™ 3.9.13
 # * Linux POSIX Release: 5.15.146.1-microsoft-standard-WSL2 Python™ 3.11.7
