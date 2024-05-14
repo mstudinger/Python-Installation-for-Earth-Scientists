@@ -14,3 +14,6 @@ This repository contains a Jupyter notebook with instructions for installing ess
 * Windows 10 Enterprise (21H2) Python™ 3.9.13
 * Linux POSIX Release: 5.15.146.1-microsoft-standard-WSL2 Python™ 3.11.7
 * Linux POSIX Release: 5.10.198-187.748.amzn2.x86_64 Python™ 3.11.8 (selected packages tested on the [CryoCloud JupyterHub](https://cryointhecloud.com))
+
+### Note:   
+**After publishing this repository several excellent suggestions were made in the [discussions](https://github.com/mstudinger/Python-Installation-for-Earth-Scientists/discussions) on how to avoid the issues I've experienced with package management. [Make sure to check them out.](https://github.com/mstudinger/Python-Installation-for-Earth-Scientists/discussions)**
