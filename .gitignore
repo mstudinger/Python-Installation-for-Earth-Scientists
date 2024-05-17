@@ -10,6 +10,7 @@ __pycache__/
 archive/
 develop/
 develop_*
+.virtual_documents/
 
 # Distribution / packaging
 .Python
